@@ -21,6 +21,11 @@ public class Pile2 implements PileI {
     public Pile2(int taille) {
         // prevoir le cas <=0
         // a completer
+        if(taille <= 0) {
+            taille = CAPACITE_PAR_DEFAUT;
+        }
+        this.capacite = taille;
+        this.stk = new Stack<Object>();
     }
 
     // constructeur fourni
@@ -30,16 +35,26 @@ public class Pile2 implements PileI {
 
     public void empiler(Object o) throws PilePleineException {
         // a completer
+        if(estPleine()) {
+            throw new PilePleineException();
+        }
+        this.stk.push(o);
     }
 
     public Object depiler() throws PileVideException {
         // a completer
-        return null;
+        if(estVide()) {
+            throw new PileVideException();
+        }
+        return this.stk.pop();
     }
 
     public Object sommet() throws PileVideException {
         // a completer
-        return null;
+        if(estVide()) {
+            throw new PileVideException();
+        }
+        return this.stk.peek();
     }
 
     /**
@@ -49,7 +64,7 @@ public class Pile2 implements PileI {
      */
     public boolean estVide() {
         // a completer
-        return false;
+        return this.taille() == 0;
     }
 
     /**
@@ -59,7 +74,7 @@ public class Pile2 implements PileI {
      */
     public boolean estPleine() {
         // a completer
-        return false;
+        return this.taille() == this.capacite();
     }
 
     /**
@@ -71,11 +86,32 @@ public class Pile2 implements PileI {
     public String toString() {
         String s = "[";
         // a completer
+        for (int i = this.taille() - 1; i >= 0; i--) {
+            s += this.stk.elementAt(i).toString();
+            if (i > 0) {
+                s += ", ";
+            }
+        }
         return s + "]";
     }
 
     public boolean equals(Object o) {
         // a completer
+        if(o instanceof Pile2) {
+            Pile2 temp;
+            temp = (Pile2)o;
+                
+            if (this.capacite() != temp.capacite() || this.taille() != temp.taille()) {
+                return false;
+            }
+            
+            for(int i =0; i < this.taille(); i++) {
+                if(!this.stk.elementAt(i).equals(temp.stk.elementAt(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
         return false;
     }
 
@@ -91,7 +127,7 @@ public class Pile2 implements PileI {
      */
     public int taille() {
         // a completer
-        return 0;
+        return this.stk.size();
     }
 
     /**
@@ -101,7 +137,7 @@ public class Pile2 implements PileI {
      */
     public int capacite() {
         // a completer
-        return 0;
+        return this.capacite;
     }
 
 } // Pile2.java

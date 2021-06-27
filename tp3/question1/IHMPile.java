@@ -7,7 +7,7 @@ import java.awt.event.*;
 public class IHMPile extends JFrame implements ActionListener{
     private JTextField donnee = new JTextField(6);
     private JTextField sommet = new JTextField(6);
-    private JLabel     contenu = new JLabel("[]");
+    private JLabel    contenu = new JLabel("[]");
 
     private Pile p;
 
@@ -41,12 +41,26 @@ public class IHMPile extends JFrame implements ActionListener{
 
             // en cas d'exception
             //contenu.setText( /* à compléter */"" + " estPleine !");
-
+            try {
+                this.p.empiler(this.donnee.getText());
+                contenu.setText(this.p.toString());
+                donnee.setText("");
+            } catch (PilePleineException ppe) {
+                contenu.setText(contenu.getText() + ppe.getMessage());
+            }
         }else{
 
             // à compléter
             // en cas d'exception
             //contenu.setText( /* à compléter */"" + " estVide !");
+            try{
+                sommet.setText(this.p.depiler().toString());
+                contenu.setText(this.p.toString());
+            }
+            catch(PileVideException pve){
+                contenu.setText("[] " + pve.getMessage());
+                sommet.setText(pve.getMessage());
+            }
         }
     }
 

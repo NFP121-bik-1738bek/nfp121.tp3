@@ -1,14 +1,25 @@
 package question2;
 
 public class PileTest extends junit.framework.TestCase {
+    
+    public PileTest() {
+    }
+    
     private PileI p1;
     private PileI p2;
 
-    public void setUp() {
+    protected void setUp() {
         p1 = new question2.Pile();
         p2 = new question2.Pile();
     }
-
+    
+    protected void tearDown() // throws java.lang.Exception
+    {
+        // Libérez ici les ressources engagées par setUp()
+        p1 = null;
+        p2 = null;
+    }
+    
     public void test_Pile_capacite() {
         assertEquals(PileI.CAPACITE_PAR_DEFAUT, p1.capacite());
     }
